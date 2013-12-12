@@ -1,0 +1,4 @@
+GitHub Howto
+========================================================
+
+This document describes how to use R Studio with GitHub.
