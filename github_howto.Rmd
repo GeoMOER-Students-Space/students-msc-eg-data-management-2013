@@ -1,4 +1,9 @@
 GitHub Howto
 ========================================================
 
-This document describes how to use R Studio with GitHub.
+The easiest way to work with GitHub from within RStudio is to add an existing
+repository as a project. Therefore you first create your git repository using
+a shell or using the interactive buttons at GitHub. Afterwards you create a
+new project from an existing directory (Menue: Project - Create project).
+
+
