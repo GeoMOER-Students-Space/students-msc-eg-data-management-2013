@@ -2,8 +2,20 @@ GitHub Howto
 ========================================================
 
 The easiest way to work with GitHub from within RStudio is to add an existing
-repository as a project. Therefore you first create your git repository using
-a shell or using the interactive buttons at GitHub. Afterwards you create a
+repository as a project. Therefore you first create your local git repository
+using a shell or create an online repository using the shell, the interactive
+buttons at GitHub or maybe the GitHub Windows program. Afterwards you create a
 new project from an existing directory (Menue: Project - Create project).
 
 
+After changing, adding, deleting files within the repository, use the tab in the
+upper right window called "Git" to prepare the local commit. Check the boxes
+next to all files which indicate some modification. Afterwards, press commit.
+You will now have a chance to include a documentation for the commit.
+
+Once the local commit has successfully been executed, you can push the
+repository to GitHub using the push arrow. The Git tab won't show any content
+as long as the local repository is not modified.
+
+More information can be found here:
+http://www.rstudio.com/ide/docs/version_control/overview
