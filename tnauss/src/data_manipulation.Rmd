@@ -1,0 +1,78 @@
+W09-1: Data manipulation
+========================================================
+In this exercise, a climate station  file is read an certain columns are
+selected for writing to an output. In addition, a new column is added giving
+the time difference between the individual measurements.
+
+We begin this task with reading the csv file and selecting the appropriate
+data subset from the input. As one can see in the output below, the first
+column consists of strings which represent data/time values.
+```{r}
+path <- "D:/active/moc/dm/programs/github/meg-dm-2013-winter/tnauss/data/"
+
+# Read csv file to data frame
+my.data <- read.table(paste(path,"csv_example_in.csv", sep=""), 
+                      header=TRUE, sep=",", quote="\"'", dec=".",
+                      na.strings = "nan", stringsAsFactors=FALSE)
+
+my.subset <- my.data[,c(1:2,4,9)]
+print(my.subset)
+```
+To compute the time difference, one has to convert the data/time strings to
+data/time values. This is realized by the following code.
+```{r}
+my.subset[,1] <- as.POSIXct(strptime(my.subset[,1], "%Y-%m-%d %H:%M:%S"))
+```
+Finally, we have to insert the time difference between each time step as second
+column. As third column, the unit of the time difference should be added.
+
+The column insertion is implemented using a function which first copies the
+content of every column equal or larger than the insert position to the column
+next to it on the right side. Afterwards the new column is inserted at the
+appropriate position (overwriting the content of this column but that is ok
+since we moved the content to the right). After moving the columns we have
+to take care of the column names. They are moved to the right/overwritten in
+the same manner as the content of the columns.
+
+To include the time difference in the output data frame, we first compute the
+differences with the diff function. Since the difference can not be computed 
+for the last item, the vector has to be extended by one number (0 in this case) 
+to fit the dimension of the data frame. We do that in two subsequent rows to 
+still have the original content in the time.differnce.
+
+After computing the time difference, we can insert the difference using the 
+pre-defined function. 
+```{r}
+col.insert <- function(input.data.frame, col.pos, col.content, col.name) {
+  input.data.frame[,(col.pos+1):(ncol(input.data.frame)+1)] <-
+    input.data.frame[,col.pos:ncol(input.data.frame)]
+  input.data.frame[,col.pos] <- col.content
+  colnames(input.data.frame)[(col.pos+1):ncol(input.data.frame)] <-
+    colnames(input.data.frame)[col.pos:(ncol(input.data.frame)-1)]
+  colnames(input.data.frame)[col.pos] <- col.name
+  return(input.data.frame)
+}
+
+time.difference <- diff(my.subset[,1])
+col.content <- c(time.difference, 0)
+output.data.frame <- col.insert(my.subset, 2, col.content, "Timedifference")
+```
+Almost finished. We just need to insert the  unit of the
+time differnce in a third column. Since we stored the time diffrence in a 
+variable called time.difference. Let's have a look at its structure:
+```{r}
+str(time.difference)
+```
+The variable has an attribute "units" which gives us what we need. We can get
+the attribute value using the attr function. Once we have it, we just use our
+self-defined function again to insert the column.
+```{r}
+attr(time.difference, "units")
+output.data.frame <- col.insert(output.data.frame, 3, attr(test, "units"), "TDUnit")
+print(output.data.frame)
+```
+Ok, let's just write the stuff to a csv file and call it a day.
+```{r}
+write.table(output.data.frame, paste(path,"output_with_new_cols.csv", sep=""), 
+            sep=",", dec=".", quote=FALSE, row.names=FALSE)
+```
