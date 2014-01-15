@@ -27,25 +27,34 @@ setwd ("C:/Users/Alice/Documents/__Studium/Master_Marburg/1.Semester/Data_Manage
 data.complete <- read.table ("csv_example_in.csv", header=TRUE, sep=";", quote="\"'", dec=".", na.strings = "nan", stringsAsFactors=FALSE)
 input.data.frame <- data.complete[,c(1,2,4,9)]
 ```
-<-- Errormessage: attempt to use zero-length variable name
+
 
 
 Two columns are added into the dataframe: 
 ```{r}
 col.num <- 2
-for (i in (nrow(input.data.frame)-1){
-  date1 <- convert.date(i)
-  date2 <- convert.date(i+1)
-  time.dif <- date2-date1
-  col.content <- c(col.content, time.dif)}
-
+col.content <- NULL
+for (i in (nrow(input.data.frame)-1)){
+  date1 <- convert.date(i+1) # i+1 as the first line is the header
+  date2 <- convert.date(i+2)
+  time.dif <- date2-date1 
+  col.content <- c(col.content, time.dif)
+}
+# col.content, date1 und date2 haben keinen Inhalt - WARUM?
   work1.data.frame <- insert.col(data.complete[,c(1:2,4,9)], 2, col.content) # kann statt data complete[,c(1:2,4,9)] auch einfach input.data.frame stehen?
 ```
 
+The following part enters the unit into the new column 3: 
 ```{r}
 col.num <- 3
-col.content <- # unit
+col.content <- "unit"
   work2.data.frame <- insert.col(work1.data.frame, 3, col.content)
+```
+
+In the next step the new columns get headers: 
+```{r}
+colnames(work2.data.frame)[2] <- "time difference"
+colnames(work2.data.frame)[3] <- "unit"
 ```
 
 The new dataframe is written into a .csv table
