@@ -3,7 +3,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta http-equiv="x-ua-compatible" content="IE=9" >
 
 <title>The how-to I always wanted</title>
 
@@ -202,10 +201,26 @@ insert.col &lt;- function(input.data.frame, col.num, col.content) {
 
 <p>The original data is put into a new dataframe and the interesting columns are extracted</p>
 
-<pre><code class="r">setwd(&quot;C:/Users/Alice/Documents/__Studium/Master_Marburg/1.Semester/Data_Management/DM09_Markdownlanguage&quot;)
-data.complete &lt;- read.table(&quot;csv_example_in.csv&quot;, header = TRUE, sep = &quot;;&quot;, 
-    quote = &quot;\&quot;&#39;&quot;, dec = &quot;.&quot;, na.strings = &quot;nan&quot;, stringsAsFactors = FALSE)
-input.data.frame &lt;- data.complete[, c(1, 2, 4, 9)]
+<pre><code class="r">setwd (&quot;C:/Users/Alice/Documents/__Studium/Master_Marburg/1.Semester/Data_Management/DM09_Markdownlanguage&quot;)
+</code></pre>
+
+<pre><code>## Error: kann Arbeitsverzeichnis nicht wechseln
+</code></pre>
+
+<pre><code class="r">data.complete &lt;- read.table (&quot;csv_example_in.csv&quot;, header=TRUE, sep=&quot;;&quot;, quote=&quot;\&quot;&#39;&quot;, dec=&quot;.&quot;, na.strings = &quot;nan&quot;, stringsAsFactors=FALSE)
+</code></pre>
+
+<pre><code>## Warning: kann Datei &#39;csv_example_in.csv&#39; nicht öffnen: No such file or
+## directory
+</code></pre>
+
+<pre><code>## Error: kann Verbindung nicht öffnen
+</code></pre>
+
+<pre><code class="r">input.data.frame &lt;- data.complete[,c(1,2,4,9)]
+</code></pre>
+
+<pre><code>## Error: Objekt &#39;data.complete&#39; nicht gefunden
 </code></pre>
 
 <p>Two columns are added into the dataframe: </p>
@@ -218,8 +233,16 @@ for (i in (nrow(input.data.frame) - 1)) {
     time.dif &lt;- date2 - date1
     col.content &lt;- c(col.content, time.dif)
 }
-# col.content, date1 und date2 haben keinen Inhalt - WARUM?
+</code></pre>
+
+<pre><code>## Error: Objekt &#39;input.data.frame&#39; nicht gefunden
+</code></pre>
+
+<pre><code class="r"># col.content, date1 und date2 haben keinen Inhalt - WARUM?
 work1.data.frame &lt;- insert.col(data.complete[, c(1:2, 4, 9)], 2, col.content)  # kann statt data complete[,c(1:2,4,9)] auch einfach input.data.frame stehen?
+</code></pre>
+
+<pre><code>## Error: Objekt &#39;data.complete&#39; nicht gefunden
 </code></pre>
 
 <p>The following part enters the unit into the new column 3: </p>
@@ -229,15 +252,29 @@ col.content &lt;- &quot;unit&quot;
 work2.data.frame &lt;- insert.col(work1.data.frame, 3, col.content)
 </code></pre>
 
+<pre><code>## Error: Objekt &#39;work1.data.frame&#39; nicht gefunden
+</code></pre>
+
 <p>In the next step the new columns get headers: </p>
 
 <pre><code class="r">colnames(work2.data.frame)[2] &lt;- &quot;time difference&quot;
-colnames(work2.data.frame)[3] &lt;- &quot;unit&quot;
+</code></pre>
+
+<pre><code>## Error: Objekt &#39;work2.data.frame&#39; nicht gefunden
+</code></pre>
+
+<pre><code class="r">colnames(work2.data.frame)[3] &lt;- &quot;unit&quot;
+</code></pre>
+
+<pre><code>## Error: Objekt &#39;work2.data.frame&#39; nicht gefunden
 </code></pre>
 
 <p>The new dataframe is written into a .csv table</p>
 
 <pre><code class="r">write.csv(work2.data.frame, file = &quot;csv_example_out&quot;)
+</code></pre>
+
+<pre><code>## Error: Objekt &#39;work2.data.frame&#39; nicht gefunden
 </code></pre>
 
 </body>
